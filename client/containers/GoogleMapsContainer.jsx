@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import * as actions from '../actions/actions';
 
 import { GoogleMap, withGoogleMap, withScriptjs, Marker } from 'react-google-maps';
+import CustomMarker from '../components/CustomMarker.jsx';
 
 // to get the google api
 import { API } from '../../clientENV/api.js';
@@ -16,9 +17,7 @@ const mapStateToProps = (store, ownProps) => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-  handleMarkerClick: event => {
-    return dispatch(actions.selectMarker(event.target.id));
-  },
+  handleMarkerClick: markerId => dispatch(actions.selectMarker(markerId)),
   onMapClick: () => dispatch(actions.deselectMarker()),
   handleDragEnd: newFocus => dispatch(actions.setFocus(newFocus.toJSON()))
 });
@@ -55,9 +54,14 @@ class GoogleMapsContainer extends React.Component {
       withGoogleMap(props => {
         //create an array of the Marker components
         const markers = props.allMarkers.map((marker, i) => (
-          <Marker key={marker.id} id={marker.id} onClick={props.handleMarkerClick} position={marker.position}>
+          // We need to wrap Marker in Customer Marker to get access to id
+          <CustomMarker
+            key={marker.id}
+            handleMarkerClick={props.handleMarkerClick}
+            id={marker.id}
+            position={marker.position}>
             {' '}
-          </Marker>
+          </CustomMarker>
         ));
 
         let map = (

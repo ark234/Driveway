@@ -1,11 +1,11 @@
-import * as types from "../constants/actionTypes";
+import * as types from '../constants/actionTypes';
 
 const initialState = {
   allMarkers: [], // list of all markers we want to put on the map
   selectedMarker: null, // the object details of a marker we select on map
   focus: { lat: 33.985, lng: -118.4695 }, //our current location
   map: null, //reference to the GoogleMap
-  searchInput: "", //search input
+  searchInput: '', //search input
   locations: []
 };
 
@@ -32,7 +32,7 @@ const mapReducer = (state = initialState, action) => {
       return {
         ...state,
         locations: action.payload.results,
-        focus: action.payload.coords,
+        focus: action.payload.coords
       };
 
     case types.SELECT_MARKER:
