@@ -1,16 +1,11 @@
-import React from "react";
-import { connect } from "react-redux";
-import * as actions from "../actions/actions";
+import React from 'react';
+import { connect } from 'react-redux';
+import * as actions from '../actions/actions';
 
-import {
-  GoogleMap,
-  withGoogleMap,
-  withScriptjs,
-  Marker
-} from "react-google-maps";
+import { GoogleMap, withGoogleMap, withScriptjs, Marker } from 'react-google-maps';
 
 // to get the google api
-import { API } from "../../clientENV/api.js";
+import { API } from '../../clientENV/api.js';
 
 const mapStateToProps = (store, ownProps) => ({
   // provide pertinent state here
@@ -38,10 +33,7 @@ class GoogleMapsContainer extends React.Component {
     let result = false;
     if (this._map.current) {
       this._map.current.panTo(nextProps.focus);
-      if (
-        JSON.stringify(this.props.allMarkers) !==
-        JSON.stringify(nextProps.allMarkers)
-      ) {
+      if (JSON.stringify(this.props.allMarkers) !== JSON.stringify(nextProps.allMarkers)) {
         result = true;
       }
     } else {
@@ -52,9 +44,9 @@ class GoogleMapsContainer extends React.Component {
 
   render() {
     const style = {
-      width: "100%",
-      height: "100%",
-      position: "absolute",
+      width: '100%',
+      height: '100%',
+      position: 'absolute',
       top: 0,
       left: 0
     };
@@ -63,13 +55,8 @@ class GoogleMapsContainer extends React.Component {
       withGoogleMap(props => {
         //create an array of the Marker components
         const markers = props.allMarkers.map((marker, i) => (
-          <Marker
-            key={marker.id}
-            id={marker.id}
-            onClick={props.handleMarkerClick}
-            position={marker.position}
-          >
-            {" "}
+          <Marker key={marker.id} id={marker.id} onClick={props.handleMarkerClick} position={marker.position}>
+            {' '}
           </Marker>
         ));
 
@@ -78,8 +65,7 @@ class GoogleMapsContainer extends React.Component {
             ref={this._map}
             defaultZoom={13}
             defaultCenter={props.focus}
-            onDragEnd={() => props.handleDragEnd(this._map.current.getCenter())}
-          >
+            onDragEnd={() => props.handleDragEnd(this._map.current.getCenter())}>
             {markers}
           </GoogleMap>
         );
